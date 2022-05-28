@@ -8,6 +8,17 @@ const create = async (user: User) => {
   return token;
 };
 
+const login = async (username: string, password: string) => {
+  const result = await UserModel.login(username, password);
+
+  if (result) {
+    const token = tokenGen(result);
+    return { token };
+  }
+  return { message: 'Username or password invalid' };
+};
+
 export default {
   create,
+  login,
 };

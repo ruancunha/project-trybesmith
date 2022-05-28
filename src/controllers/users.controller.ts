@@ -7,6 +7,18 @@ const create = async (req: Request, res: Response) => {
   res.status(201).json({ token });
 };
 
+const login = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+  const result = await UserService.login(username, password);
+
+  if (result.message) {
+    return res.status(401).json(result);
+  }
+
+  return res.status(200).json(result);
+};
+
 export default {
   create,
+  login,
 };
