@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import ProductController from './controllers/product.controller';
+import UserController from './controllers/users.controller';
 import validateProduct from './middlewares/validateProduct.middleware';
+import validateUser from './middlewares/validateUser.middleware';
 
 const app = express();
 
@@ -8,6 +10,7 @@ app.use(express.json());
 
 app.get('/products', ProductController.getAll);
 app.post('/products', validateProduct, ProductController.create);
+app.post('/users', validateUser.pt1, validateUser.pt2, UserController.create);
 
 app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
   const { name, message, details } = err as any;
@@ -23,6 +26,7 @@ app.use((err: Error, _req: Request, res: Response, next: NextFunction) => {
       break;
     default:
       console.error(err);
+      
       res.sendStatus(500);
   }
 
