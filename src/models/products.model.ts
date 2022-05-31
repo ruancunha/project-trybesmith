@@ -21,7 +21,16 @@ const create = async (product: Product): Promise<Product> => {
   return { id: insertId, ...product };
 };
 
+const update = async (orderId: number, prodId: number) => {
+  await connection
+    .execute<ResultSetHeader>(
+    'UPDATE Trybesmith.Products SET orderId = ? HWHERE id = ?',
+    [orderId, prodId],
+  );
+};
+
 export default {
   getAll,
   create,
+  update,
 };
