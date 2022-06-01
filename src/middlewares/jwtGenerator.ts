@@ -7,7 +7,4 @@ const jwtConfig: SignOptions = {
 
 export const SECRET = 'yadayada';
 
-export default (payload = {}) => {
-  console.log(payload);
-  Jwt.sign(payload, SECRET, jwtConfig);
-};
+export default (payload = {}) => Jwt.sign(payload, SECRET, jwtConfig);
