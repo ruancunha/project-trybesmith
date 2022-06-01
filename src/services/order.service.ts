@@ -12,7 +12,7 @@ const getOrders = async () => {
   return result;
 };
 
-const createOrder = async (userId: number, productsIds: number[]) => {
+const createOrder = async (userId: number | undefined, productsIds: number[]) => {
   const order = await OrderModel.createOrder(userId);
 
   productsIds.forEach((prodId) => ProductModel.update(order, prodId));

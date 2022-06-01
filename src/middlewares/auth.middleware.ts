@@ -1,24 +1,21 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import Jwt from 'jsonwebtoken';
+import TokenPayload from '../interfaces/tokenPayload.interface';
 import { SECRET } from './jwtGenerator';
 
 const tokenValidation = async (req: Request, res: Response, next: NextFunction) => {
-  const { authorization } = req.headers;
+  const auth = req.headers.authorization;
 
-  if (!authorization) res.status(401).json({ message: 'Token not found' });
+  if (!auth) return res.status(401).json({ message: 'Token not found' });
 
   try {
-    const decoded = Jwt.verify(authorization, SECRET);
+    const payload = Jwt.verify(auth, SECRET) as TokenPayload;
 
-    req.tokenData = decoded.data;
-
+    req.body.userId = payload.id;
+    
     next();
-  } catch (error: any) {
-    if (error.name.includes('Token')) {
-      return res.status(401).json({ message: 'Invalid token' });
-    }
-
-    next(error);
+  } catch {
+    return res.status(401).json({ message: 'Invalid token' });
   }
 };
 

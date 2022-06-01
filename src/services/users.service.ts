@@ -10,9 +10,16 @@ const create = async (user: User) => {
 
 const login = async (username: string, password: string) => {
   const result = await UserModel.login(username, password);
+  console.log(`Service: ${username}`);
 
   if (result) {
-    const token = tokenGen(result);
+    const { id } = result;
+    const payload = { id, username };
+    console.log(payload);
+
+    const token = tokenGen(payload);
+    console.log(token);
+    
     return { token };
   }
   return { message: 'Username or password invalid' };

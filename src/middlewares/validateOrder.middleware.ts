@@ -1,4 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
+// import { JwtPayload } from 'jsonwebtoken';
+
+// interface IReq extends Request{
+//   user: JwtPayload | string;
+//   headers: {
+//     authorization: string
+//   }
+// }
 
 const validateProducts = (req: Request, res: Response, next: NextFunction) => {
   const { productsIds } = req.body;

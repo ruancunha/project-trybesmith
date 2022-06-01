@@ -13,7 +13,7 @@ const getOrders = async (): Promise<Order[]> => {
   return products as Order[];
 };
 
-const createOrder = async (userId: number): Promise<number> => {
+const createOrder = async (userId: number | undefined): Promise<number> => {
   const xove = await connection
     .execute<ResultSetHeader>('INSERT INTO Trybesmith.Orders (userId) VALUE (?)', [userId]);
   const [{ insertId }] = xove;

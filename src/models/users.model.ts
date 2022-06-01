@@ -14,13 +14,13 @@ const create = async (user: User): Promise<number> => {
 };
 
 const login = async (username: string, password: string): Promise<User> => {
-  const [result] = await connection
+  const result = await connection
     .execute<RowDataPacket[]>(
     'SELECT * FROM Trybesmith.Users WHERE username = ? AND password = ?',
     [username, password],
   );
-
-  return result[0] as User;
+  const [rows] = result;
+  return rows[0] as User;
 };
 
 export default {
